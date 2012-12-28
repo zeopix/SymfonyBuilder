@@ -1,5 +1,5 @@
 {
-    "name": "zeopix/SymfonyBuilder",
+    "name": "zeopix/symfony-builder",
     "type": "symfony-bundle",
     "description": "SymfonyBuilder alpha version",
     "keywords": ["Integrated development enviornment for symfony2"],
