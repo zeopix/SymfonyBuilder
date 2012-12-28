@@ -1,0 +1,31 @@
+{
+    "name": "zeopix/SymfonyBuilder",
+    "type": "symfony-bundle",
+    "description": "SymfonyBuilder alpha version",
+    "keywords": ["Integrated development enviornment for symfony2"],
+    "homepage": "http://3media.es",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Iván Guillén",
+            "email": "zeopix@gmail.com"
+        },
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": ">=2.1,<2.3-dev"
+    },
+    "require-dev": {
+        "twig/twig": "*",
+        "doctrine/doctrine-bundle": "*",
+        "swiftmailer/swiftmailer": "*",
+        "willdurand/propel-typehintable-behavior": "dev-master",
+        "symfony/yaml": "2.1.*",
+        "symfony/validator": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "Iga\\BuilderBundle": "" }
+    },
+    "target-dir": "Iga/BuilderBundle"
+}
