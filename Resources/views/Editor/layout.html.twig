@@ -1,0 +1,35 @@
+{% extends 'IgaBuilderBundle::layout.html.twig' %}
+{% block extra %}
+  <script src="{{ asset('bundles/igabuilder/js/editor.js') }}"></script>
+{% endblock %}
+{% block container %}
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          {% block left %}
+            {% render 'IgaBuilderBundle:Editor:explorer' with {'namespace':namespace,'name':name} %}
+          {% endblock %}
+        </div>
+        <div class="span8">
+          {% block panel %}
+          <div class="hero-unit">
+            <h1>Bienvenido!</h1>
+            <p>En construcción...</p>
+          </div>
+          
+          {% endblock %}
+        </div><!--/span-->
+        <div class="span2">
+          <h4>Inspector</h4>
+          <hr>
+        </div>
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; SymfonyBuilder 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+    {% endblock %}

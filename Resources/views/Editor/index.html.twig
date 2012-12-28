@@ -1,0 +1,14 @@
+{% extends 'IgaBuilderBundle:Editor:layout.html.twig' %}
+{% block left %}
+	<h4>File Explorer</h4>
+	<hr>
+	<ul class="file-explorer">
+	{% for file in files %}
+		{% include 'IgaBuilderBundle:Editor:node.html.twig' with {'file':file} %}
+	{% endfor %}
+	</ul>
+	
+{% endblock %}
+{% block panel %}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+<li class="node">
+	{% if file.dir %}
+		<a href="#" class="dir">{{ file.name }}</a>
+		<ul class="hide">
+		{% for file in file.files %}
+			{% include 'IgaBuilderBundle:Editor:node.html.twig' with {'file':file} %}
+		{% endfor %}
+		</ul>
+	{% else %}
+		<a href="{{ path('builder_editor_edit',{'route':file.route,'namespace':namespace,'name':name}) }}" class="file">{{ file.name }}</a>
+	{% endif %}
+</li>

@@ -1,0 +1,12 @@
+{% for node in statement.getSubNodeNames %}
+<li>
+{# Node Info #}
+<p><b>{{ statement.type }}</b></p><br>
+{% if statement.__get(node).getSubNodeNames is defined %}
+{# Subnodes  #}
+<ul>
+{% include 'IgaBuilderBundle:Default:node.html.twig' with {'statement':statement.__get(node),'level':level+1} %}
+</ul>
+{% endif %}
+</li>
+{% endfor %}

@@ -1,0 +1,9 @@
+{% block field_row %}
+	<div class="control-group">
+		{{ form_label(form,null,{'label_attr':{'class':'control-label'}}) }}
+    	<div class="controls">	
+    		{{ form_widget(form) }}
+			<span class="help-inline">{{ form_errors(form) }}</span>
+    	</div>
+	</div>
+{% endblock field_row %}

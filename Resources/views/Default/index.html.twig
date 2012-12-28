@@ -1,0 +1,22 @@
+{% extends 'IgaBuilderBundle::layout.html.twig' %}
+{% form_theme form 'IgaBuilderBundle:Form:inline_theme.html.twig' %}
+{% block panel %}
+          <div class="row-fluid">
+            {% for bundle in bundles %}
+            <div class="span4">
+              <h2>{{bundle.name}} <small>{{bundle.namespace}}</small></h2>
+              <a class="btn btn-block btn-primary" href="{{ path('builder_editor',{'namespace':bundle.routenamespace,'name':bundle.name}) }}">Editar</a>
+
+            </div><!--/span-->
+            {% endfor %}
+            <div class="span4">
+            		<h2>Crear Bundle</h2>
+            	<form class="form-inline" method="POST">
+            		{{ form_row(form.namespace,{'attr':{'class':'input-small'}}) }}
+            		{{ form_row(form.name) }}
+            		{{ form_rest(form) }}<br><br>	
+            		<input type="submit" class="btn btn-success btn-block" value="Crear Bundle">
+              	</form>
+            </div><!--/span-->
+          </div><!--/row-->
+{% endblock %}

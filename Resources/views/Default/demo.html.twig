@@ -1,0 +1,17 @@
+{% extends 'IgaBuilderBundle::layout.html.twig' %}
+{% block panel %}
+          <div class="hero-unit">
+            <h1>Código</h1>
+            <p>{{ code }}</p>
+          </div>
+          <div class="row-fluid">
+            <div class="span8">
+              <h2>Statements</h2>
+              <ul>
+              {% for statement in statements %}
+              	{% include 'IgaBuilderBundle:Default:node.html.twig' with {'statement':statement,'level':1} %}
+			  {% endfor %}
+			</ul>
+            </div><!--/span-->
+          </div><!--/row-->
+{% endblock %}

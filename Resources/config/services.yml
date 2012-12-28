@@ -1,0 +1,11 @@
+parameters:
+    bundle_manager.class:      Iga\BuilderBundle\Manager\BundleManager
+    command_manager.class:      Iga\BuilderBundle\Manager\CommandManager
+
+services:
+    command_manager:
+        class:        "%command_manager.class%"
+        arguments: [%kernel.root_dir%]
+    bundle_manager:
+        class:        "%bundle_manager.class%"
+        arguments: [%kernel.root_dir%,"@command_manager"]

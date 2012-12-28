@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SymfonyBuilder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ asset('bundles/igabuilder/css/bootstrap.css') }}" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="{{ asset('bundles/igabuilder/css/bootstrap-responsive.css') }}" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="{{ asset('bundles/igabuilder/js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/js/bootstrap.js') }}"></script>
+
+    {% block extra %}{% endblock %}
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="{{ path('builder_bundle') }}">SymfonyBuilder</a>
+        </div>
+      </div>
+    </div>
+    {% block container %}
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span10 offset1">
+          {% block panel %}
+          <div class="hero-unit">
+            <h1>Bienvenido!</h1>
+            <p>En construcción...</p>
+          </div>
+          
+          {% endblock %}
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; SymfonyBuilder 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+    {% endblock %}
+
+  </body>
+</html>

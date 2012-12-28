@@ -1,0 +1,10 @@
+{% extends 'IgaBuilderBundle::layout.html.twig' %}
+{% block panel %}
+         <h2>{{bundle.name}} <small>{{bundle.namespace}}</small></h2>
+          <div class="row-fluid">
+            <div class="span4">
+              <h3>Modo Editor</h3>
+              <a class="btn btn-success" href="{{ path('builder_editor',{'name':bundle.name,'namespace':bundle.routenamespace}) }}">Activar</a>
+            </div><!--/span-->
+          </div><!--/row-->
+{% endblock %}
