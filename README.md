@@ -27,7 +27,8 @@ public function registerBundles()
     );
 }
 ```
-
+Falta añadir rutas.
+Importante(php.ini): magic_quotes_gpc = Off
 
 ### TODO
 Editor
