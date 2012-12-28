@@ -32,6 +32,7 @@ public function registerBundles()
 ### TODO
 Editor
 - Guardar, acabar.
+- CodeMirror: http://codemirror.net/
 
 Paleta de Código
 - Sistema de snippets inteligentes (ver Sketch)
