@@ -9,7 +9,7 @@
         {
             "name": "Iván Guillén",
             "email": "zeopix@gmail.com"
-        },
+        }
     ],
     "minimum-stability": "dev",
     "require": {
