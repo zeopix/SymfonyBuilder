@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Iga\BuilderBundle\Model\FileModel;
 
 /**
  * @Route("/editor")
@@ -33,10 +34,21 @@ class EditorController extends Controller
      * @Template()
      */
     public function editAction($namespace,$name,$route){
-        $content =$this->get('bundle_manager')->openFile($route);
+
+        $request = $this->getRequest();
+        $file = $this->get('bundle_manager')->openFile($route);
+        $form = $this->createFormBuilder($file)->add('content', 'textarea')->getForm();
+
+        if($request->getMethod() == "POST"){
+            $form->bind($request);
+            if($form->isValid()){
+                $this->get('bundle_manager')->saveFile($file);
+                $request->getSession()->setFlash('message','Archivo guardado correctamente a las '.date('H:i'));
+            }
+        }
 
         $namespace = str_replace("/","-",$namespace);
-        return array("content"=>$content,'namespace'=>$namespace,'name'=>$name);
+        return array("form"=>$form->createView(),'namespace'=>$namespace,'name'=>$name);
 
     }
 

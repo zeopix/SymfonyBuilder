@@ -5,12 +5,18 @@
 {% block container %}
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span2">
+        <div class="span2" data-spy="affix">
           {% block left %}
             {% render 'IgaBuilderBundle:Editor:explorer' with {'namespace':namespace,'name':name} %}
           {% endblock %}
+          <br>
+          {% if app.session.hasFlash('message') %}
+          <div class="alert alert-success">
+            {{ app.session.getFlash('message') }}
+          </div>
+          {% endif%}
         </div>
-        <div class="span8">
+        <div class="span8 offset2">
           {% block panel %}
           <div class="hero-unit">
             <h1>Bienvenido!</h1>
@@ -18,18 +24,15 @@
           </div>
           
           {% endblock %}
+          <br>
         </div><!--/span-->
-        <div class="span2">
+        <div class="span2" style="margin-left:83.4%" data-spy="affix">
+          {% block right %}
           <h4>Inspector</h4>
           <hr>
+          {% endblock %}
         </div>
       </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <p>&copy; SymfonyBuilder 2013</p>
-      </footer>
 
     </div><!--/.fluid-container-->
     {% endblock %}

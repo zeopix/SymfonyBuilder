@@ -38,10 +38,11 @@
         </div>
       </div>
     </div>
+    {% block precontainer %}{% endblock %}
     {% block container %}
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span10 offset1">
+        <div class="span8 offset2">
           {% block panel %}
           <div class="hero-unit">
             <h1>Bienvenido!</h1>
@@ -60,6 +61,7 @@
 
     </div><!--/.fluid-container-->
     {% endblock %}
+    {% block postcontainer %}{% endblock %}
 
   </body>
 </html>

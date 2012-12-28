@@ -14,8 +14,10 @@
     <link rel="stylesheet" href="{{ asset('bundles/igabuilder/codemirror/lib/util/dialog.css') }}">
     <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/searchcursor.js') }}"></script>
     <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/search.js') }}"></script>
-    
+      <script src="{{ asset('bundles/igabuilder/js/editor.js') }}"></script>
+
     <style type="text/css">
+      .editor { margin:0px;}
       .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
       dt {font-family: monospace; color: #666;}
       .CodeMirror {
@@ -25,13 +27,13 @@
       }
     </style>
 {% endblock %}
+{% block precontainer %}<form class="editor" method="POST">{% endblock %}
 {% block panel %}
 
-    <form><textarea id="code" name="code">{{content}}</textarea><br>
-  <input type="submit" class="btn btn-block btn-primary" value="Guardar">
+    
+      {{ form_widget(form.content,{'id':'code'}) }}
+      {{ form_rest(form) }}
 </form>
-
-
 <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
@@ -44,3 +46,6 @@
       });
     </script>
 {% endblock %}
+{% block right %}<input type="submit" class="btn btn-block btn-primary" value="Guardar">{% endblock %}
+{% block postcontainer %}</form>{% endblock %}
+
