@@ -1,16 +1,20 @@
-{% extends 'IgaBuilderBundle:Editor:layout.html.twig' %}
 {% block panel %}
-<div class="modal">
+<div id="entityGeneratorModal" role="dialog" class="modal{% if app.session.hasFlash('dialog') %}{% else %} hide fade{% endif %}">
+
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     {% block title %}{% endblock %}
   </div>
   <div class="modal-body">
+      {% if app.session.hasFlash('dialog') %}
+        <div class="alert alert-">
+          Compruebe el formulario: {{ app.session.getFlash('dialog') }}</div>
+      {% endif %}
     {% block panel_body %}{% endblock %}
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
+    <a href="#" class="btn">Cerrar</a>
+    {% block actions %}{% endblock %}
   </div>
 </div>
 {% endblock %}

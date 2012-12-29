@@ -12,7 +12,7 @@ class EntityFieldGeneratorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$choices = array_keys(Type::getTypesMap());
-        $builder->add('name',null,array('attr'=>array('class'=>'input-medium')))->add('type','choice',array('choices'=>$choices,'attr'=>array('class'=>'input-small'),'expanded'=>false,'preferred_choices'=>array(8)))->add('length','integer',array('attr'=>array('class'=>'input-mini')));
+        $builder->add('name',null,array('attr'=>array('class'=>'input-medium')))->add('type','choice',array('choices'=>$choices,'attr'=>array('class'=>'input-small mute'),'expanded'=>false,'preferred_choices'=>array(8)))->add('length','integer',array('attr'=>array('class'=>'input-mini muted')));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

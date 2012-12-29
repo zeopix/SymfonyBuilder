@@ -3,8 +3,11 @@
 {% block title %}
 <h3>Nueva Entidad</h3>
 {% endblock %}
+{% block actions %}
+    <a href="#" class="btn btn-primary btn-submit-form">Generar Entidad</a>
+{% endblock %}
 {% block panel_body %}
-<form class="form form-horizontal" method="POST">
+<form class="form form-horizontal form-to-submit" action="{{ path('builder_generator_entity',{'namespace':namespace,'name':name,'referer':true}) }}" method="POST">
       {{ form_row(form.name) }}
       {{ form_row(form.format) }}
       <div class="control-group">
@@ -48,7 +51,21 @@ jQuery(document).ready(function() {
         // add a new tag form (see next code block)
         addTagForm(collectionHolder, $newLinkTr);
     });
+    $(".mute").live('change',function(){
+    	var val = $(this).val();
+    	if(val!=8){
+    		$(this).parent().parent().find('.muted').attr("disabled","disabled");
+    	}else{
+    		$(this).parent().parent().find('.muted').removeAttr("disabled");
+    	}
+    });
+    $(".btn-submit-form").on('click',function(e){
+        e.preventDefault();
+        $(".form-to-submit").submit();
+
+    });
 });
+
 
 function addTagForm(collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
@@ -57,17 +74,18 @@ function addTagForm(collectionHolder, $newLinkLi) {
     var prototype_length = collectionHolder.attr('data-prototype-length');
 
     // count the current form inputs we have (e.g. 2), use that as the new index (e.g. 2)
-    var newIndex = collectionHolder.find(':input').length;
+    var newIndex = collectionHolder.find('tr').length-1;
 
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
     //var newForm = prototype.replace(/__name__/g, newIndex);
-    newFormTdName = $("<td></td>").append(prototype_name);
-    newFormTdType = $("<td></td>").append(prototype_type);
-    newFormTdLength = $("<td></td>").append(prototype_length);
+    newFormTdName = $("<td></td>").append(prototype_name.replace(/__name__/g, newIndex));
+    newFormTdType = $("<td></td>").append(prototype_type.replace(/__name__/g, newIndex));
+    newFormTdLength = $("<td></td>").append(prototype_length.replace(/__name__/g, newIndex));
     var newForm = $("<tr></tr>").append(newFormTdName).append(newFormTdType).append(newFormTdLength);
     // Display the form in the page in an li, before the "Add a tag" link li
     $newLinkLi.before(newForm);
 }
+
 </script>
 {% endblock %}

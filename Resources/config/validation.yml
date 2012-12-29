@@ -1,0 +1,4 @@
+Iga\BuilderBundle\Model\Generator\EntityFieldGeneratorModel:
+    constraints:
+        - Callback:
+            methods:   [isReservedKeyword]

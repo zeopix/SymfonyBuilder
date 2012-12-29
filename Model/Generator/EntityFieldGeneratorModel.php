@@ -1,5 +1,6 @@
 <?php
 namespace Iga\BuilderBundle\Model\Generator;
+use Doctrine\DBAL\Platforms\Keywords\MySQLKeywords;
 
 class EntityFieldGeneratorModel {
 
@@ -19,4 +20,15 @@ class EntityFieldGeneratorModel {
         }
     }
 	
+    public function isReservedKeyword(ExecutionContext $context)
+    {
+        // somehow you have an array of "fake names"
+        $keywords = new MySQLKeywords();
+        $fakeNames = $keywords->geyKeywords();
+
+        // check if the name is actually a fake name
+        if (in_array($this->name(), $reservedKeywords)) {
+            $context->addViolationAtSubPath('name', 'MySQL Reserved Keyword!', array(), null);
+        }
+    }
 }

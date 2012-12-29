@@ -10,7 +10,7 @@ class EntityGeneratorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name');
-        $builder->add('format','choice',array('expanded'=>false,'choices'=>Array('annotation','xml','yml','php')));
+        $builder->add('format','choice',array('expanded'=>false,'choices'=>Array('annotation'=>'annotation','xml'=>'xml','yml'=>'yml','php'=>'php')));
         $builder->add('fields', 'collection', array('type' => new EntityFieldGeneratorType(),'allow_add' => true,'by_reference' => false,));
     }
 

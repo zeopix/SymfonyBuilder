@@ -7,7 +7,7 @@
             <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Generate <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                          <li><a href="{{ path('builder_generator_entity',{'namespace':namespace,'name':name}) }}">Entity</a></li>
+                          <li><a href="#entityGeneratorModal" role="button" data-toggle="modal">Entity</a></li>
                         </ul>
                 </li>
 </ul>
@@ -46,3 +46,6 @@
 
     </div><!--/.fluid-container-->
     {% endblock %}
+{% block modals %}
+{% render 'IgaBuilderBundle:Generator:entity' with {'namespace':namespace,'name':name} %}
+{% endblock %}
