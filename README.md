@@ -1,44 +1,23 @@
 SymfonyBuilder
 ==============
-Este bundle está en fase experimental y no debe ser utilizado en producción.
+Este bundle está en fase experimental, no utilizar en entorno de producción.
+This bundle is a experimental version, do not use in prod env. 
 
-### Instalación
+Symfony ver: symfony 2.1.*
 
-```js
-{
-    "require": {
-        "zeopix/symfony-builder": "*"
-    }
-}
-```
+Get started
+-------------
+[Install](https://github.com/zeopix/SymfonyBuilder/blob/master/Resources/doc/install.md)
+[3rd Party](https://github.com/zeopix/SymfonyBuilder/blob/master/Resources/doc/3rdparty.md)
+-------------
 
-``` bash
-$ php composer.phar update zeopix/symfony-builder
-```
-
-``` php
-<?php
-// app/AppKernel.php
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new Iga\BuilderBundle\IgaBuilderBundle(),
-    );
-}
-```
-Falta añadir rutas.
-Importante(php.ini): magic_quotes_gpc = Off
 
 ### TODO
-Editor
-- Guardar, acabar.
-- CodeMirror: http://codemirror.net/
 
-Paleta de Código
-- Sistema de snippets inteligentes (ver Sketch)
-- Asociación (parsing) de snippets en código existente.
-- Parser: https://github.com/nikic/PHP-Parser 
+Parser
+- Hacer los snippets más inteligentes (tipos, bucles, entrada, salida)
+- Sistema para parsear snippets, crear patrones.
+- Parsear código y reconocer patrones(snippets) . 
 
 Snippets:
 - Handling (Request,Response,Routing)
