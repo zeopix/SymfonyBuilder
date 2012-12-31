@@ -34,11 +34,10 @@ class EditorController extends Controller
      * @Template()
      */
     public function editAction($namespace,$name,$route){
-
         $request = $this->getRequest();
         $file = $this->get('bundle_manager')->openFile($route);
         $form = $this->createFormBuilder($file)->add('content', 'textarea')->getForm();
-
+        
         if($request->getMethod() == "POST"){
             $form->bind($request);
             if($form->isValid()){
@@ -48,6 +47,7 @@ class EditorController extends Controller
         }
 
         $namespace = str_replace("/","-",$namespace);
+
         return array("form"=>$form->createView(),'namespace'=>$namespace,'name'=>$name);
 
     }

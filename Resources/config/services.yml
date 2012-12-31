@@ -1,6 +1,7 @@
 parameters:
     bundle_manager.class:      Iga\BuilderBundle\Manager\BundleManager
     command_manager.class:      Iga\BuilderBundle\Manager\CommandManager
+    snippet_manager.class:      Iga\BuilderBundle\Manager\SnippetManager
 
 services:
     command_manager:
@@ -9,3 +10,6 @@ services:
     bundle_manager:
         class:        "%bundle_manager.class%"
         arguments: [%kernel.root_dir%,"@command_manager"]
+    snippet_manager:
+        class:        "%snippet_manager.class%"
+        arguments: [%kernel.root_dir%]

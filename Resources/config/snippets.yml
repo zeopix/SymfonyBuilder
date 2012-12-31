@@ -1,0 +1,3 @@
+snippets:
+    variables:
+        EntityManager: "$em = $this->getDoctrine()->getEntityManager();"

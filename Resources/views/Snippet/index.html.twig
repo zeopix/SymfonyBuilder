@@ -1,0 +1,6 @@
+{% for category in snippets.snippets %}
+{% for name,snippet in category %}
+	<a class="snippet" ondragstart="return onDragStart(event)" href="#" snippet="{{ snippet }}" class="btn">{{ name }}</a> 
+{% endfor %}
+
+{% endfor %}

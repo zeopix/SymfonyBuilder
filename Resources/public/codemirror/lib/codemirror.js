@@ -1478,6 +1478,7 @@ window.CodeMirror = (function() {
   function onDrop(e) {
     var cm = this;
     if (cm.options.onDragEvent && cm.options.onDragEvent(cm, addStop(e))) return;
+    if(cm.options.onDragEventHandler) e = cm.options.onDragEventHandler(cm,e);
     e_preventDefault(e);
     var pos = posFromMouse(cm, e, true), files = e.dataTransfer.files;
     if (!pos || isReadOnly(cm)) return;
@@ -1508,6 +1509,7 @@ window.CodeMirror = (function() {
       try {
         var text = e.dataTransfer.getData("Text");
         if (text) {
+
           var curFrom = cm.view.sel.from, curTo = cm.view.sel.to;
           setSelection(cm, pos, pos);
           if (cm.view.draggingText) replaceRange(cm, "", curFrom, curTo, "paste");
@@ -2856,6 +2858,10 @@ window.CodeMirror = (function() {
   CodeMirror.defineMIME = function(mime, spec) {
     mimeModes[mime] = spec;
   };
+
+  CodeMirror.posFromMouse = function(){
+alert("hi")
+  }
 
   CodeMirror.resolveMode = function(spec) {
     if (typeof spec == "string" && mimeModes.hasOwnProperty(spec))

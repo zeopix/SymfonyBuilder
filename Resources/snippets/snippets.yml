@@ -1,0 +1,4 @@
+snippets:
+    variables:
+        EntityManager: "$em = $this->getDoctrine()->getEntityManager();"
+        CreateForm: "$form = $this->createForm(new FormType(),$entity);"
