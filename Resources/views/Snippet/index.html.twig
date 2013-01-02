@@ -1,6 +1,17 @@
-{% for category in snippets.snippets %}
-{% for name,snippet in category %}
-	<a class="snippet" ondragstart="return onDragStart(event)" href="#" snippet="{{ snippet }}" class="btn">{{ name }}</a> 
-{% endfor %}
 
+<ul class="nav nav-tabs">
+ {% for name,category in snippets.snippets %}
+ 	<li{% if name=="controller" %} class="active"{% endif %}><a href="#{{name}}" data-toggle="tab">{{name}}</a></li>
+ {% endfor %}
+</ul>
+<div class="tab-content">
+{% for name,category in snippets.snippets %}
+	<div class="tab-pane{% if name=="controller" %} active{% endif %}" id="{{name}}">
+		<ul class="snippets">
+		{% for name,snippet in category %}
+			<li><a class="snippet" href="#"{% if snippet.variables is defined %} data-variables="{{ snippet.variables|join(",") }}"{% endif %} data-snippet="{{ snippet.code }}" class="btn">{{ name }}</a> </li>
+		{% endfor %}
+		</ul>
+	</div>
 {% endfor %}
+</div>

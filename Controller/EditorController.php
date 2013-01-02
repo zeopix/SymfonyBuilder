@@ -52,6 +52,34 @@ class EditorController extends Controller
 
     }
 
+    /**
+     * @Route("/{namespace}_{name}/{route}/create",name="builder_editor_create")
+     * @Template()
+     */
+    public function createAction($namespace,$name,$route){
+        
+        $request = $this->getRequest();
+        $file = new FileModel();
+        $form = $this->createFormBuilder($file)->add('name', 'text')->add('content','textarea')->getForm();
+
+        if($request->getMethod() == "POST"){
+            $form->bind($request);
+            if($form->isValid()){
+                $directory = $this->get('bundle_manager')->openFile($route);
+                $file->route = str_replace("-_-","/",$route . "-_-" . $file->name);
+                $this->get('bundle_manager')->saveFile($file);
+                $request->getSession()->setFlash('message','Archivo guardado correctamente a las '.date('H:i'));
+                $route = $file->getRoutingRoute();
+                return $this->redirect($this->generateUrl('bundle_editor_edit',array('namespace'=>$namespace,'name'=>$name,'route'=>$route)));
+            }
+        }else
+        
+        $namespace = str_replace("/","-",$namespace);
+        $route = str_replace("/","-_-",$route);
+        return array("form"=>$form->createView(),'namespace'=>$namespace,'name'=>$name,'route'=>$route);
+
+    }
+
     public function explorerAction($namespace,$name)
     {
         $namespace = str_replace("-","/",$namespace);

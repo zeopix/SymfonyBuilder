@@ -1,12 +1,14 @@
 <li class="node">
 	{% if file.dir %}
-		<a href="#" class="dir">{{ file.name }}</a>
+		<a href="#" class="dir"><b class="icon icon-folder-close"></b> {{ file.name }}</a>
 		<ul class="hide">
 		{% for file in file.files %}
 			{% include 'IgaBuilderBundle:Editor:node.html.twig' with {'file':file} %}
 		{% endfor %}
+		<li class="node">
+		<a href="{{ path('builder_editor_create',{'route':file.route,'namespace':namespace,'name':name}) }}" class="create"><b class="icon icon-plus-sign"></b> Nuevo Archivo</a></li>
 		</ul>
 	{% else %}
-		<a href="{{ path('builder_editor_edit',{'route':file.route,'namespace':namespace,'name':name}) }}" class="file">{{ file.name }}</a>
+		<a href="{{ path('builder_editor_edit',{'route':file.route,'namespace':namespace,'name':name}) }}" class="file"><b class="icon icon-file"></b> {{ file.name }}</a>
 	{% endif %}
 </li>

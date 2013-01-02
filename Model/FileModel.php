@@ -4,7 +4,9 @@ namespace Iga\BuilderBundle\Model;
 class FileModel {
 
     public $content;
+    public $name;
     public $route;
+    public $isDirectory = false;
 
     public function __toString(){
         return $this->content;
@@ -28,6 +30,10 @@ class FileModel {
 
     public function getContent(){
         return $this->content;
+    }
+
+    public function getRoutingRoute(){
+        return str_replace("/","-_-",$this->route);
     }
 	
 }

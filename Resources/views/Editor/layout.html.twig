@@ -13,8 +13,8 @@
 </ul>
 {% endblock %}
 {% block container %}
-    <div class="container-fluid">
-      <div class="row-fluid">
+    <div class="container-fluid no-border">
+      <div class="row-fluid affix-fixed">
         <div class="span2" data-spy="affix">
           {% block left %}
             {% render 'IgaBuilderBundle:Editor:explorer' with {'namespace':namespace,'name':name} %}
@@ -36,7 +36,8 @@
           {% endblock %}
           <br>
         </div><!--/span-->
-        <div class="span2" style="margin-left:83.4%" data-spy="affix">
+        <div class="span2" data-spy="affix">
+          <br>
           {% block right %}
           <h4>Inspector</h4>
           {% endblock %}

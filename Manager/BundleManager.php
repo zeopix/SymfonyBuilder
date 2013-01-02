@@ -102,19 +102,20 @@ class BundleManager {
 	public function openFile($route){
 		$path = str_replace("-_-","/",$route);
 		$file = new FileModel();
-		$file->content = file_get_contents($this->rootDir.$path);
+		if(is_dir($this->rootDir.$path)){
+			$file->isDirectory = true;
+		}else{
+			$file->content = file_get_contents($this->rootDir.$path);	
+		}
 		$file->route = $path;
 		return $file;
 	}
 
 	public function saveFile(FileModel $file,$fix=true){
-		//die($file->content);
 		$fixStr = str_replace("\\\\","\\",$file->content);
 		$content = ($fix) ?  $fixStr : $file->content;
 		$content = $fixStr;
-		//die($content);
-		//die($content);
-		return file_put_contents($this->rootDir.$file->route,$content);
+		return file_put_contents($this->rootDir.$file->route,$content);	
 	}
 
 }

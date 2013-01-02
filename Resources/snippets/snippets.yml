@@ -1,4 +1,26 @@
 snippets:
-    variables:
-        EntityManager: "$em = $this->getDoctrine()->getEntityManager();"
-        CreateForm: "$form = $this->createForm(new FormType(),$entity);"
+    controller:
+        ControllerSkeleton: 
+           code: "<?php\n\nnamespace __{namespace}__\\__{bundle}__\Controller;\n\nuse Symfony\Bundle\FrameworkBundle\Controller\Controller;\nuse Symfony\Component\HttpFoundation\RedirectResponse;\n\nuse Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;\nuse Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;\n\nclass __{name}__Controller extends Controller\n{\n\t\n\n}\n"
+           variables: ['name','bundle','namespace']
+        ControllerAction: 
+           code: "\n\t/**\n\t* @Route(\"/__{name}__\",name=\"controller___{name}__\")\n\t* @Template()\n\t*/\n\tpublic function __{name}__Action()\n\t{\n\t\t\n\t}"
+           variables: ['name']
+        EntityManager: 
+           code: "\n\t\t$em = $this->getDoctrine()->getEntityManager();\n"
+        Request: 
+           code: "\n\t\t$em = $this->getRequest();\n"
+        CreateForm: 
+           code: "\n\t$form = $this->createForm(new __{formtype}__(),$entity);\n"
+           variables: ["formtype"]
+        ValidateForm: 
+           code: "\n\tif($request->getMethod() == 'POST'){\n\t\tif($form->isValid()){\n \t\t\t//Valid \n\t\t}\n\t}\n"
+    model:
+        Table: 
+           code: "<?php\n\nnamespace __{namespace}__\\__{bundle}__\Entity;\n\nuse Doctrine\ORM\Mapping as ORM;\n/**\n *\n *@ORM\Table()\n *@ORM\Entity\n */\nclass __{name}__\n{\n\t\n\n}\n"
+           variables: ['name','bundle','namespace']
+        Field: 
+           code: '\n\t/**\n\t *@var __{type}__\n\t *\n\t * @ORM\Column(name="__{name}__",type="__{type}__")\n\t **/\n\tprivate $__{name}__;\n\t'
+           variables: ['name','type']
+      
+

@@ -33,11 +33,10 @@
 {% endblock %}
 {% block precontainer %}<form class="editor" method="POST">{% endblock %}
 {% block panel %}
-
-    
+      {% block form_extended %}{% endblock %}
       {{ form_widget(form.content,{'id':'code'}) }}
       {{ form_rest(form) }}
-</form>
+
 <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,
@@ -47,6 +46,11 @@
         indentWithTabs: true,
         enterMode: "keep",
         tabMode: "shift",
+        onDragEvent: function(i,e){
+          if(e.type=="drop"){
+
+          }
+        }
       });
 
 
@@ -54,7 +58,43 @@
   $(".snippet").each(function(){
     //$(this).draggable();//.data("Text","nulloo");
     $(this).on('dragstart',function(e){
-      e.originalEvent.dataTransfer.setData("Text",$(this).attr("snippet"));
+      e.originalEvent.dataTransfer.setData("Text",$(this).attr("data-snippet"));
+    })
+    $(this).on('click',function(e){
+      var position = editor.getCursor();
+      var text = $(this).attr("data-snippet");
+      var plainVariables = $(this).attr("data-variables");
+      if(plainVariables){
+      var variables = plainVariables.split(",");
+      for(variable in variables){
+        var value = prompt(variables[variable]+":");
+        //how to fix this?
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+      }
+      }
+      editor.replaceRange(text,position);
+      e.preventDefault();
+      return false;
+
+    })
+    $(this).on('dragend',function(e){
+      var text = editor.getSelection();
+      var plainVariables = $(this).attr("data-variables");
+      if(plainVariables){
+      var variables = plainVariables.split(",");
+      for(variable in variables){
+        var value = prompt(variables[variable]+":");
+        //how to fix this?
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+        text = text.replace("__{"+variables[variable]+"}__",value);  
+      }
+      }
+      editor.replaceSelection(text);
     })
   });
 })

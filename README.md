@@ -18,6 +18,8 @@ Parser
 - Hacer los snippets más inteligentes (tipos, bucles, entrada, salida)
 - Sistema para parsear snippets, crear patrones.
 - Parsear código y reconocer patrones(snippets) . 
+- Añadir un sistema de preguntas a los snippets, p.e: al añadir un "$" al snippet, el editor hará focus y pedirá enter para rellenar ese hueco.
+
 
 Snippets:
 - Handling (Request,Response,Routing)

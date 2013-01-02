@@ -1,0 +1,6 @@
+snippets:
+    name:
+       extends: [controller,entity]
+       format: [php]
+       content: ""
+       variables: [name,surname,bundle]
