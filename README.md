@@ -7,9 +7,8 @@ Symfony ver: symfony 2.1.*
 
 Get started
 -------------
-[Install](https://github.com/zeopix/SymfonyBuilder/blob/master/Resources/doc/install.md)
-[3rd Party](https://github.com/zeopix/SymfonyBuilder/blob/master/Resources/doc/3rdparty.md)
--------------
+- [Install](https://github.com/zeopix/SymfonyBuilder/blob/master/Resources/doc/install.md)
+- [3rd Party](https://github.com/zeopix/SymfonyBuilder/blob/master/Resources/doc/3rdparty.md)
 
 
 ### TODO
