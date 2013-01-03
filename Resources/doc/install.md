@@ -3,7 +3,7 @@
 ```js
 {
     "require": {
-        "zeopix/symfony-builder": "*"
+        "zeopix/symfony-builder": "dev-master"
     }
 }
 ```
