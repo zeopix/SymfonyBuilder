@@ -14,6 +14,8 @@
 .file-explorer li{
 	list-style: none;
 	border-bottom: 1px solid #AAA;
+	padding: 3px;
+	padding-left: 8px;
 }
 
 /* Fix because of 'affix' feature */
