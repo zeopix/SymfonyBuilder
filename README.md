@@ -12,7 +12,7 @@ Get started
 
 
 ### FEATURES
-- Gestión de bundles (Crea, lista, modifica(soon))
+- Gestión de bundles (crea, lista, modifica)
 - Añadir paquetes de compozer.
 - Generación de Bundles,Entidades.
 - IDE(CodeMirror) integrado para modificar código, con snippets de código drag'n'drop.
