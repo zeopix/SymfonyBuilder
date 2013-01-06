@@ -10,18 +10,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/",name="builder_bundle")
+     * @Route("/{configFileName}",name="builder_bundle",defaults={"configFileName"=FALSE})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($configFileName)
     {
         $request = $this->getRequest();
         $bundles = $this->get('bundle_manager')->getList();
         $composer = $this->get('bundle_manager')->getComposer();
         $vendor = new \Iga\BuilderBundle\Model\VendorModel();
-
         $bundle = new \Iga\BuilderBundle\Model\BundleModel();
         $form = $this->createForm(new \Iga\BuilderBundle\Form\Type\BundleType(),$bundle);
+        $vendorForm = $this->createForm(new \Iga\BuilderBundle\Form\Type\VendorType(),$vendor);
+
+        $configTree = $this->get('config_manager')->getTree();
+        if($configFileName){
+            $file = $this->get('config_manager')->openConfigFileByName($configFileName);
+
+            $configForm = $this->createFormBuilder($file)->add('content', 'textarea')->getForm();
+
+            if($request->getMethod() == "POST"){
+                $configForm->bind($request);
+                if($configForm->isValid()){
+                    $this->get('config_manager')->saveConfigFile($file);
+                    $request->getSession()->setFlash('message','Archivo guardado correctamente a las '.date('H:i'));
+                }
+            }
+            return array('bundles' => $bundles,'form'=>$form->createView(),'configFile'=>$file,'configForm'=>$configForm->createView(),'vendorForm'=>$vendorForm->createView(),'composer'=>$composer,'configTree'=>$configTree);
+
+        }
+
         $form->bind($request);
         if($request->getMethod() == "POST"){
             if($form->isValid()){    
@@ -31,11 +49,11 @@ class DefaultController extends Controller
                 }            
             }
         }
-        $configTree = $this->get('config_manager')->getTree();
 
-        $vendorForm = $this->createForm(new \Iga\BuilderBundle\Form\Type\VendorType(),$vendor);
         return array('bundles' => $bundles,'form'=>$form->createView(),'vendorForm'=>$vendorForm->createView(),'composer'=>$composer,'configTree'=>$configTree);
     }
+
+
     /**
      * @Route("/vendor/add",name="builder_bundle_vendor_add")
      */

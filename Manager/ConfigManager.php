@@ -31,6 +31,17 @@ class ConfigManager {
 		return $files;
 	}
 
+	public function saveConfigFile($file){
+		return file_put_contents($this->rootDir."/../app/config/".$file->name,$file->content);
+	}
+
+	public function openConfigFileByName($name){
+		$file = new FileModel();
+		$file->name =$name;
+		$file->setContent(file_get_contents($this->rootDir."/../app/config/".$name));
+		return $file;
+	}
+
 	public function getFile($file){
 		return json_decode(file_get_contents($this->rootDir."/../app/config/".$file->name));
 	}

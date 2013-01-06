@@ -1,6 +1,33 @@
 {% extends 'IgaBuilderBundle::layout.html.twig' %}
 {% form_theme form 'IgaBuilderBundle:Form:inline_theme.html.twig' %}
 {% form_theme vendorForm 'IgaBuilderBundle:Form:inline_theme.html.twig' %}
+{% block extra %}
+{% if configForm is defined %}
+    <link rel="stylesheet" href="{{ asset('bundles/igabuilder/codemirror/lib/codemirror.css') }}">
+    <script src="{{ asset('bundles/igabuilder/codemirror/lib/codemirror.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/matchbrackets.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/xml/xml.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/javascript/javascript.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/css/css.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/clike/clike.js') }}"></script>
+
+    <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/searchcursor.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/search.js') }}"></script>
+      <script src="{{ asset('bundles/igabuilder/js/editor.js') }}"></script>
+
+    <style type="text/css">
+      .editor { margin:0px;}
+      .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
+      dt {font-family: monospace; color: #666;}
+      .CodeMirror {
+        border: 1px solid #eee;
+        height: 100%;
+        min-height: 100%;
+      }
+    </style>
+    {% endif %}
+{% endblock %}
 {% block panel %}
           <div class="row-fluid">
             <div class="span3">
@@ -30,18 +57,32 @@
 
             </div><!--/span-->
             <div class="span9">
-              <ul class="nav nav-tabs">
-                {% for file in configTree %}
-                <li><a href="#">{{ file.name }}</a></li>
-                {% endfor %}
-              </ul>
- 
-              <div class="tab-content">
-                <div class="tab-pane active" id="home">...</div>
-                <div class="tab-pane" id="profile">...</div>
-                <div class="tab-pane" id="messages">...</div>
-                <div class="tab-pane" id="settings">...</div>
+              <div class="btn-toolbar">
+                <div class="btn-group">
+                  {% for file in configTree %}
+                    <a class="btn{% if configFile is defined %}{% if configFile.name == file.name %} active{% endif %}{% endif %}" href="{{ path('builder_bundle',{'configFileName':file.name}) }}">{{file.name}}</a>
+                  {% endfor %}
+                </div>
               </div>
+              {% if configForm is defined %}
+                  <form class="editor" method="POST" {{ form_enctype(configForm) }}>
+                    {{ form_widget(configForm.content,{'id':'code'}) }}
+                    {{ form_rest(configForm) }}
+                    <input type="submit" value="Guardar" class="btn btn-block btn-primary">
+                  </form>
+                    <script>
+                      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                        lineNumbers: true,
+                        matchBrackets: true,
+                        mode: "application/x-httpd-php",
+                        indentUnit: 4,
+                        indentWithTabs: false,
+                        enterMode: "keep",
+                        tabMode: "shift"
+                      });
+                    </script>
+                  {% endif %}
+
     
             </div><!--/span-->
 
