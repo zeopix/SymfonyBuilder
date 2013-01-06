@@ -1,8 +1,9 @@
 {% extends 'IgaBuilderBundle::layout.html.twig' %}
 {% form_theme form 'IgaBuilderBundle:Form:inline_theme.html.twig' %}
+{% form_theme vendorForm 'IgaBuilderBundle:Form:inline_theme.html.twig' %}
 {% block panel %}
           <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
               <h3>Bundles</h3>
               <hr>
             {% for bundle in bundles %}
@@ -13,19 +14,35 @@
             <hr><br>
                             <h4>Crear Bundle</h4>
               <form class="form-inline" method="POST">
-                {{ form_row(form.namespace,{'attr':{'class':'input-mini','placeholder':'NS'}}) }}
-                {{ form_row(form.name,{'attr':{'class':'input-medium','placeholder':'NameBundle'}}) }}
+                {{ form_widget(form.namespace,{'attr':{'class':'input-mini','placeholder':'NS'}}) }}
+                {{ form_widget(form.name,{'attr':{'class':'input-medium','placeholder':'NameBundle'}}) }}
                 {{ form_rest(form) }}<br><br> 
                 <input type="submit" class="btn btn-success btn-block" value="Crear Bundle">
                 </form>
                 <hr><br>
                             <h4>Enlazar Bundle</h4>
                             Nombre composer:
+                            <form action="{{ path('builder_bundle_vendor_add') }}" method="POST">
+                 {{ form_widget(vendorForm.vendor,{'attr':{'class':'input-mini','placeholder':'Vendor'}}) }}
+                {{ form_widget(vendorForm.bundle,{'attr':{'class':'input-medium','placeholder':'Package'}}) }}    
+                {{ form_rest(vendorForm) }}
+                <input class="btn btn-primary" value="Añadir" type="submit">                        </form>
 
             </div><!--/span-->
-            <div class="span4">
-              <h3>Configuración</h3>
-              
+            <div class="span9">
+              <ul class="nav nav-tabs">
+                {% for file in configTree %}
+                <li><a href="#">{{ file.name }}</a></li>
+                {% endfor %}
+              </ul>
+ 
+              <div class="tab-content">
+                <div class="tab-pane active" id="home">...</div>
+                <div class="tab-pane" id="profile">...</div>
+                <div class="tab-pane" id="messages">...</div>
+                <div class="tab-pane" id="settings">...</div>
+              </div>
+    
             </div><!--/span-->
 
           </div><!--/row-->

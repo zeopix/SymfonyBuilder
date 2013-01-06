@@ -17,6 +17,8 @@ class DefaultController extends Controller
     {
         $request = $this->getRequest();
         $bundles = $this->get('bundle_manager')->getList();
+        $composer = $this->get('bundle_manager')->getComposer();
+        $vendor = new \Iga\BuilderBundle\Model\VendorModel();
 
         $bundle = new \Iga\BuilderBundle\Model\BundleModel();
         $form = $this->createForm(new \Iga\BuilderBundle\Form\Type\BundleType(),$bundle);
@@ -29,8 +31,36 @@ class DefaultController extends Controller
                 }            
             }
         }
-        return array('bundles' => $bundles,'form'=>$form->createView());
+        $configTree = $this->get('config_manager')->getTree();
+
+        $vendorForm = $this->createForm(new \Iga\BuilderBundle\Form\Type\VendorType(),$vendor);
+        return array('bundles' => $bundles,'form'=>$form->createView(),'vendorForm'=>$vendorForm->createView(),'composer'=>$composer,'configTree'=>$configTree);
     }
+    /**
+     * @Route("/vendor/add",name="builder_bundle_vendor_add")
+     */
+    public function vendorAddAction()
+    {
+        $request = $this->getRequest();
+        $vendor = new \Iga\BuilderBundle\Model\VendorModel();
+
+        $form = $this->createForm(new \Iga\BuilderBundle\Form\Type\VendorType(),$vendor);
+
+        $form->bind($request);
+        if($request->getMethod() == "POST"){
+            if($form->isValid()){    
+
+                $success = $this->get('bundle_manager')->addVendor($vendor);
+                if($success){
+                    $request->getSession()->setFlash('message','Se ha vinculado el bundle correctamente.');
+                    return $this->redirect($this->generateUrl("builder_bundle"));
+                }            
+            }
+        }
+        throw new \Exception("Error, form not valid.");
+        //return $this->redirect($this->generateUrl("builder_bundle"));
+    }
+
     /**
      * @Route("/{namespace}_{name}",name="builder_bundle_show")
      * @Template()

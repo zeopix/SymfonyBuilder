@@ -15,10 +15,29 @@ class BundleManager {
 		$this->rootDir = $rootDir."/../src";
 	}
 	
+	public function getComposer(){
+		return json_decode(file_get_contents($this->rootDir."/../composer.json"));
+	}
+	
+	public function setComposer($composer){
+		return file_put_contents($this->rootDir."/../composer.json",json_encode($composer));
+	}
+
 	public function getList()
 	{
 		$bundles = $this->scanNamespace();
 		return $bundles;
+	}
+
+	public function addVendor(\Iga\BuilderBundle\Model\VendorModel $vendor){
+		$composer = $this->getComposer();
+		$bundle = (string) $vendor;
+        if(!isset($composer->require->$bundle)){
+        	$composer->require->$bundle = '*';
+        }
+        $this->setComposer($composer);
+		$this->cm->execute("php composer.phar update ".$bundle);
+		return true;
 	}
 
 	public function explore(BundleModel $bundle)
@@ -26,6 +45,19 @@ class BundleManager {
 		$basePath = $bundle->namespace.$bundle->name;
 		$files = $this->scanDir($basePath);
 		return $files;
+	}
+
+	public function create(\Iga\BuilderBundle\Model\BundleModel $model)
+	{
+		if($this->checkConvention($model->name)){
+			$this->cm->execute("generate:bundle --namespace=".$model->namespace."/".$model->name." --dir=".$this->rootDir."/../src/ --no-interaction");
+		}
+
+	}
+
+	public function checkConvention($name){
+		$position = strrpos($name,"Bundle");
+		return $position;
 	}
 	
 	public function get($namespace,$name)
@@ -38,19 +70,6 @@ class BundleManager {
 			return $bundle;
 		}
 		return false;
-	}
-
-	public function create(\Iga\BuilderBundle\Model\BundleModel $model)
-	{
-		if($this->checkConvention($model->getName())){
-			$this->cm->execute("generate:bundle --namespace=".$model->namespace."/".$model->name." --dir=".$this->rootDir."/../src/ --no-interaction");
-		}
-
-	}
-
-	public function checkConvention($name){
-		$position = strrpos($name,"Bundle");
-		return $position;
 	}
 
 	private function scanNamespace($namespace="/"){
