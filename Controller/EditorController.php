@@ -100,7 +100,7 @@ class EditorController extends Controller
         $files = $this->get('bundle_manager')->explore($bundle);
 
         $namespace = str_replace("/","-",$namespace);
-        return array('bundle' => $bundle,'files'=>$files,'namespace'=>$namespace,'name'=>$name);
+        return $this->render('IgaBuilderBundle:Editor:explorer.html.twig',array('bundle' => $bundle,'files'=>$files,'namespace'=>$namespace,'name'=>$name));
     }
 
 }
