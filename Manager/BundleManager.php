@@ -74,10 +74,10 @@ class BundleManager {
 
 	private function scanNamespace($namespace=""){
 		$bundles = Array();
-		$path = "/".$namespace;
-		$raw = scandir($this->rootDir.$path);
+		$path = empty($namespace) ? "": $namespace."/";
+		$raw = scandir($this->rootDir."/".$path);
 		foreach($raw as $object){
-			if((is_dir($this->rootDir.$path.$object)) && ($object !== ".") && ($object !== "..")){
+			if((is_dir($this->rootDir."/".$path.$object)) && ($object !== ".") && ($object !== "..")){
 				if($this->checkConvention($object)){
 					$bundle = new BundleModel();
 					$bundle->name = $object;
