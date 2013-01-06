@@ -35,7 +35,12 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="{{ path('builder_bundle') }}">SymfonyBuilder</a>
-          {% block nav %}{% endblock %}
+          {% block nav %}
+          <ul class="nav pull-right">
+            <li{% if repositoryActive is defined %} class="active"{% endif %}><a href="{{  path('builder_repository_git') }}">Repositorio</a></li>
+            <li{% if repositoryActive is not defined %} class="active"{% endif %}><a href="{{  path('builder_bundle') }}">Builder</a></li>
+          </ul>
+          {% endblock %}
         </div>
       </div>
     </div>

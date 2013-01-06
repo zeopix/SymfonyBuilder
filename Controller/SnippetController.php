@@ -11,7 +11,6 @@ use Iga\BuilderBundle\Model\FileModel;
 
 /**
  * @Route("/snippet")
- * @Template()
  */
 class SnippetController extends Controller
 {

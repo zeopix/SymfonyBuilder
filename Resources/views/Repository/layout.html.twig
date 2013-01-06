@@ -1,0 +1,57 @@
+{% extends 'IgaBuilderBundle::layout.html.twig' %}
+{% block extra %}
+    <link href="{{ asset('bundles/igabuilder/google-code-prettify/prettify.css') }}" rel="stylesheet">
+    <script src="{{ asset('bundles/igabuilder/google-code-prettify/prettify.js') }}"></script>
+    <script>
+    //$(function(){ window.prettyPrint && prettyPrint(); })
+    </script>
+{% endblock %}
+{% block panel %}
+          <div class="row-fluid">
+            <div class="span2">
+              <br>
+             <div class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Comandos GIT</li>
+                    {% set commands = {'status':"Status",'push':"Push origin",'pull':'Pull Origin'} %}
+                    {% for key,name in commands %}
+                    <li{% if command == key %} class="active"{% endif %}><a href="{{ path('builder_repository_git',{'command':key})}}">{{ name }}</a></li>
+                    {% endfor %}
+                    <li{% if command == 'add' %} class="active"{% endif %}>
+                    Add:<br><form class="form-inline" action="{{ path('builder_repository_git',{'command':'add'})}}" method="GET">
+                    <input type="text" name="path" class="input-mini">
+                    <input type="submit" class="btn btn-primary" value="Go">
+                  </form>
+                  </li>
+                    <li{% if command == 'commit' %} class="active"{% endif %}>
+                    Commit:<br><form class="form-inline" action="{{ path('builder_repository_git',{'command':'commit'})}}" method="GET">
+                    <input type="text" name="message" class="input-mini">
+                    <input type="submit" class="btn btn-primary" value="Go">
+                  </form>
+                  </li>
+                    <li class="nav-header">Comandos SF2</li>
+                {% set commands = {'assets':"Install Assets",'assetic':"Assetic Dump",'schema':'Schema Update (SQL)','schema-force':'Schema Update (Force)'} %}
+                    {% for key,name in commands %}
+                    <li{% if command == key %} class="active"{% endif %}><a href="{{ path('builder_repository_sf',{'command':key})}}">{{ name }}</a></li>
+                    {% endfor %}
+                    <li{% if command == 'cache' %} class="active"{% endif %}>
+                    Limpiar Cache:<br><form class="form-inline" action="{{ path('builder_repository_sf',{'command':'cache'})}}" method="GET">
+                    <input type="text" name="env" placeholder="env" class="input-mini">
+                    <input type="submit" class="btn btn-primary" value="Go">
+                  </form>
+
+                  </li>
+
+                </ul>
+             </div>
+            </div><!--/span-->
+            <div class="span9">
+              <br>
+              <pre class="prettyprint linenums">{% for line in output %}{{ line|trim }}
+{% endfor %}</pre>
+             
+    
+            </div><!--/span-->
+
+          </div><!--/row-->
+{% endblock %}

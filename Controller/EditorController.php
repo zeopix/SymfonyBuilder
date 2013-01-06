@@ -11,7 +11,6 @@ use Iga\BuilderBundle\Model\BundleModel;
 
 /**
  * @Route("/editor")
- * @Template()
  */
 class EditorController extends Controller
 {
