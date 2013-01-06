@@ -19,6 +19,11 @@ class ConfigManager {
 		$files = array();
 
 		$file = new FileModel();
+        $file->name = 'README.md';
+        $file->route = '..';
+        $files[] = $file;
+
+		$file = new FileModel();
         $file->name = 'AppKernel.php';
         $files[] = $file;
 
