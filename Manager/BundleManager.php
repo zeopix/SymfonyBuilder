@@ -93,25 +93,29 @@ class BundleManager {
 		return $bundles;
 	}
 
-	private function scanDir($basePath){
+	private function scanDir($basePath,$path=""){
 		$files = Array();
-		if ($handle = opendir($this->rootDir.$basePath)) {
+		$targetPath = empty($path) ? $basePath : $basePath."/".$path;
+		//if($path=="config")
+		//die($this->rootDir."/".$targetPath);
+		if ($handle = opendir($this->rootDir."/".$targetPath)) {
     		while (false !== ($entry = readdir($handle))) {
     			if(($entry == ".") || ($entry == "..")){
     				continue;
     			}
     			$dirFiles = false;
     			$dir = false;
-    			if(is_dir($this->rootDir.$basePath."/".$entry)){
-    				$dirFiles = $this->scanDir($basePath."/".$entry);
+    			$routePath = empty($path) ? "" : $path."/";
+    			if(is_dir($this->rootDir."/".$targetPath."/".$entry)){
+    				$dirFiles = $this->scanDir($basePath,$routePath.$entry);
     				$dir = true;
     			}
     			$file = Array(
     				'name' => $entry,
-    				'type' => (string) filetype($this->rootDir.$basePath . "/" . $entry),
+    				'type' => (string) filetype($this->rootDir."/".$targetPath . "/" . $entry),
     				'dir' => $dir,
     				'files' => $dirFiles,
-    				'route' => str_replace("/","-_-",$basePath."/".$entry)
+    				'route' => str_replace("/","-_-",$routePath.$entry)
     			);
     			$files[] = $file;
     		}
@@ -119,8 +123,14 @@ class BundleManager {
     	return $files;	
 	}
 
-	public function openFile($route){
-		$path = str_replace("-_-","/",$route);
+	public function openBundleFile(BundleModel $bundle,FileModel $file){
+
+		$fileRoute = str_replace("-_-","/",$file->route);
+		$route="/".$bundle->namespace."/".$bundle->name."/".$fileRoute;
+		return $this->openFile($route);
+	}
+
+	public function openFile($path){
 		$file = new FileModel();
 		if(is_dir($this->rootDir.$path)){
 			$file->isDirectory = true;
@@ -129,6 +139,16 @@ class BundleManager {
 		}
 		$file->route = $path;
 		return $file;
+	}
+
+	public function saveFileBundle(BundleModel $bundle,FileModel $file){
+		$fileRoute = str_replace("-_-","/",$file->route);
+		$route = $fileRoute;
+		if($file->isDirectory){
+			return mkdir($this->rootDir.$route);
+		}else{
+			return file_put_contents($this->rootDir.$route,$file->content);	
+		}
 	}
 
 	public function saveFile(FileModel $file,$fix=true){

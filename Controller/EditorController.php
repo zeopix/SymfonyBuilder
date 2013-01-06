@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Iga\BuilderBundle\Model\FileModel;
+use Iga\BuilderBundle\Model\BundleModel;
 
 /**
  * @Route("/editor")
@@ -35,13 +36,19 @@ class EditorController extends Controller
      */
     public function editAction($namespace,$name,$route){
         $request = $this->getRequest();
-        $file = $this->get('bundle_manager')->openFile($route);
+        $bundle = new BundleModel();
+        $bundle->namespace = $namespace;
+        $bundle->name = $name;
+        $file = new FileModel();
+        $file->route = $route;
+
+        $file = $this->get('bundle_manager')->openBundleFile($bundle,$file);
         $form = $this->createFormBuilder($file)->add('content', 'textarea')->getForm();
         
         if($request->getMethod() == "POST"){
             $form->bind($request);
             if($form->isValid()){
-                $this->get('bundle_manager')->saveFile($file);
+                $this->get('bundle_manager')->saveFileBundle($bundle,$file);
                 $request->getSession()->setFlash('message','Archivo guardado correctamente a las '.date('H:i'));
             }
         }
@@ -60,14 +67,18 @@ class EditorController extends Controller
         
         $request = $this->getRequest();
         $file = new FileModel();
+        $bundle = new BundleModel();
+        $file->content = "<?php \n // code";
+        $bundle->namespace = $namespace;
+        $bundle->name = $name;
+
         $form = $this->createFormBuilder($file)->add('name', 'text')->add('isDirectory','checkbox')->getForm();
 
         if($request->getMethod() == "POST"){
             $form->bind($request);
             if($form->isValid()){
-                $directory = $this->get('bundle_manager')->openFile($route);
-                $file->route = str_replace("-_-","/",$route . "-_-" . $file->name);
-                $this->get('bundle_manager')->saveFile($file);
+                $file->route = $route . "-_-" . $file->name;
+                $this->get('bundle_manager')->saveFileBundle($bundle,$file);
                 $request->getSession()->setFlash('message','Archivo guardado correctamente a las '.date('H:i'));
                 $route = $file->getRoutingRoute();
                 if($file->isDirectory){

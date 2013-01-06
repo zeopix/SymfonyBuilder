@@ -26,6 +26,12 @@ class FileModel {
 
     public function setContent($content){
         $this->content = $content;
+        return $this;
+    }
+
+    public function setName($name){
+        $this->name = $name;
+        return $this;
     }
 
     public function getContent(){
