@@ -42,7 +42,7 @@ class BundleManager {
 
 	public function explore(BundleModel $bundle)
 	{
-		$basePath = $bundle->namespace.$bundle->name;
+		$basePath = $bundle->namespace."/".$bundle->name;
 		$files = $this->scanDir($basePath);
 		return $files;
 	}
@@ -62,7 +62,7 @@ class BundleManager {
 	
 	public function get($namespace,$name)
 	{
-		if(is_dir($this->rootDir.$namespace.$name)){
+		if(is_dir($this->rootDir."/".$namespace."/".$name)){
 			$bundle = new BundleModel();
 			$bundle->name = $name;
 			$bundle->namespace = $namespace;
@@ -72,11 +72,12 @@ class BundleManager {
 		return false;
 	}
 
-	private function scanNamespace($namespace="/"){
+	private function scanNamespace($namespace=""){
 		$bundles = Array();
-		$raw = scandir($this->rootDir.$namespace);
+		$path = "/".$namespace;
+		$raw = scandir($this->rootDir.$path);
 		foreach($raw as $object){
-			if((is_dir($this->rootDir.$namespace.$object)) && ($object !== ".") && ($object !== "..")){
+			if((is_dir($this->rootDir.$path.$object)) && ($object !== ".") && ($object !== "..")){
 				if($this->checkConvention($object)){
 					$bundle = new BundleModel();
 					$bundle->name = $object;
@@ -84,7 +85,7 @@ class BundleManager {
 					$bundle->routenamespace = str_replace("/","-",$namespace);
 					$bundles[] = $bundle;
 				}else{
-					$objects = $this->scanNamespace($namespace.$object."/");
+					$objects = empty($namespace) ? $this->scanNamespace($object) : $this->scanNamespace($path.$object);
 					$bundles = array_merge($bundles,$objects);
 				}
 			}
@@ -134,7 +135,11 @@ class BundleManager {
 		$fixStr = str_replace("\\\\","\\",$file->content);
 		$content = ($fix) ?  $fixStr : $file->content;
 		$content = $fixStr;
-		return file_put_contents($this->rootDir.$file->route,$content);	
+		if($file->isDirectory){
+			return mkdir($this->rootDir.$file->route);
+		}else{
+			return file_put_contents($this->rootDir.$file->route,$content);	
+		}
 	}
 
 }

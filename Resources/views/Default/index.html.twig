@@ -11,6 +11,8 @@
     <script src="{{ asset('bundles/igabuilder/codemirror/mode/javascript/javascript.js') }}"></script>
     <script src="{{ asset('bundles/igabuilder/codemirror/mode/css/css.js') }}"></script>
     <script src="{{ asset('bundles/igabuilder/codemirror/mode/clike/clike.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/php/php.js') }}"></script>
+    <script src="{{ asset('bundles/igabuilder/codemirror/mode/yaml/yaml.js') }}"></script>
 
     <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/searchcursor.js') }}"></script>
     <script src="{{ asset('bundles/igabuilder/codemirror/lib/util/search.js') }}"></script>
@@ -30,7 +32,7 @@
 {% endblock %}
 {% block panel %}
           <div class="row-fluid">
-            <div class="span3">
+            <div class="span2">
               <h3>Bundles</h3>
               <hr>
             {% for bundle in bundles %}
@@ -40,9 +42,9 @@
             {% endfor %}
             <hr><br>
                             <h4>Crear Bundle</h4>
-              <form class="form-inline" method="POST">
+              <form class="form-inline" method="POST" action="{{ path('builder_bundle') }}">
                 {{ form_widget(form.namespace,{'attr':{'class':'input-mini','placeholder':'NS'}}) }}
-                {{ form_widget(form.name,{'attr':{'class':'input-medium','placeholder':'NameBundle'}}) }}
+                {{ form_widget(form.name,{'attr':{'class':'input-mini','placeholder':'NameBundle'}}) }}
                 {{ form_rest(form) }}<br><br> 
                 <input type="submit" class="btn btn-success btn-block" value="Crear Bundle">
                 </form>
@@ -51,16 +53,16 @@
                             Nombre composer:
                             <form action="{{ path('builder_bundle_vendor_add') }}" method="POST">
                  {{ form_widget(vendorForm.vendor,{'attr':{'class':'input-mini','placeholder':'Vendor'}}) }}
-                {{ form_widget(vendorForm.bundle,{'attr':{'class':'input-medium','placeholder':'Package'}}) }}    
+                {{ form_widget(vendorForm.bundle,{'attr':{'class':'input-mini','placeholder':'Package'}}) }}    
                 {{ form_rest(vendorForm) }}
-                <input class="btn btn-primary" value="Añadir" type="submit">                        </form>
+                <input class="btn btn-success btn-block" value="Añadir a Composer" type="submit">                        </form>
 
             </div><!--/span-->
-            <div class="span9">
+            <div class="span10">
               <div class="btn-toolbar">
                 <div class="btn-group">
                   {% for file in configTree %}
-                    <a class="btn{% if configFile is defined %}{% if configFile.name == file.name %} active{% endif %}{% endif %}" href="{{ path('builder_bundle',{'configFileName':file.name}) }}">{{file.name}}</a>
+                    <a class="btn{% if configFile is defined %}{% if configFile.name == file.name %} active{% endif %}{% endif %}" href="{{ path('builder_bundle',{'configFileName':file.name,'configFileRoute':file.route}) }}">{{file.name}}</a>
                   {% endfor %}
                 </div>
               </div>
@@ -74,7 +76,7 @@
                       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                         lineNumbers: true,
                         matchBrackets: true,
-                        mode: "application/x-httpd-php",
+                        mode: "text/x-yaml",
                         indentUnit: 4,
                         indentWithTabs: false,
                         enterMode: "keep",

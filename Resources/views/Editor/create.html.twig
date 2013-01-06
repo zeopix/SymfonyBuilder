@@ -1,6 +1,10 @@
-{% extends 'IgaBuilderBundle:Editor:edit.html.twig' %}
-{% block precontainer %}<form class="editor" method="POST" action="{{ path('builder_editor_create',{'namespace':namespace,'name':name,'route':route}) }}">{% endblock %}
-{% block form_extended %}
-{{ form_row(form.name) }}
+{% extends 'IgaBuilderBundle:Editor:layout.html.twig' %}
+{% form_theme form 'IgaBuilderBundle:Form:horizontal_theme.html.twig' %}
+{% block precontainer %}
+<form class="editor form form-horizontal" method="POST" action="{{ path('builder_editor_create',{'namespace':namespace,'name':name,'route':route}) }}">{% endblock %}
+{% block panel %}
+<br><br>
+{{ form_widget(form) }}
 {% endblock %}
-{% block right %}<input type="submit" onclick="javascript:$('form.editor').submit();" class="btn btn-block btn-primary" value="Guardar">{% endblock %}
+{% block right %}<input type="submit" onclick="javascript:$('form.editor').submit();" class="btn btn-block btn-primary" value="Crear">{% endblock %}
+{% block postcontainer %}</form>{% endblock %}

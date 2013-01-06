@@ -2,4 +2,6 @@
 	{% for file in files %}
 		{% include 'IgaBuilderBundle:Editor:node.html.twig' with {'file':file} %}
 	{% endfor %}
+		<li><a href="{{ path('builder_editor_create',{'route':[namespace,'-_-',name]|join,'namespace':namespace,'name':name}) }}" class="create"><b class="icon icon-plus-sign"></b> Nuevo Archivo</a></li>
+
 	</ul>

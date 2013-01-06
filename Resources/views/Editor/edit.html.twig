@@ -33,8 +33,9 @@
 {% endblock %}
 {% block precontainer %}<form class="editor" method="POST">{% endblock %}
 {% block panel %}
-      {% block form_extended %}{% endblock %}
+      {% block form_extended %}
       {{ form_widget(form.content,{'id':'code'}) }}
+      {% endblock %}
       {{ form_rest(form) }}
 
 <script>

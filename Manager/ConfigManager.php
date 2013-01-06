@@ -17,12 +17,23 @@ class ConfigManager {
 	
 	public function getTree(){
 		$files = array();
-		$basePath = $this->rootDir."/../app/config/";
-		if ($handle = opendir($basePath)) {
+
+		$file = new FileModel();
+        $file->name = 'AppKernel.php';
+        $files[] = $file;
+
+		$file = new FileModel();
+        $file->name = 'composer.json';
+        $file->route = '..';
+        $files[] = $file;
+
+		$baseConfigPath = $this->rootDir."/../app/config/";
+		if ($handle = opendir($baseConfigPath)) {
     		while (false !== ($entry = readdir($handle))) {
-        		if ($entry != "." && $entry != ".." && !is_dir($basePath.$entry)) {
+        		if ($entry != "." && $entry != ".." && !is_dir($baseConfigPath.$entry)) {
             		$file = new FileModel();
             		$file->name = $entry;
+            		$file->route = "config";
             		$files[] = $file;
         		}
     		}
@@ -32,18 +43,23 @@ class ConfigManager {
 	}
 
 	public function saveConfigFile($file){
-		return file_put_contents($this->rootDir."/../app/config/".$file->name,$file->content);
+		$route = "";
+		if(!empty($file->route)){ $route = $file->route . "/"; }
+		return file_put_contents($this->rootDir."/../app/".$route.$file->name,$file->content);
 	}
 
-	public function openConfigFileByName($name){
+	public function openConfigFileByNameAndRoute($name,$route){
 		$file = new FileModel();
 		$file->name =$name;
-		$file->setContent(file_get_contents($this->rootDir."/../app/config/".$name));
+		if(!empty($route)){ $route = $route . "/"; }
+		$file->setContent(file_get_contents($this->rootDir."/../app/".$route.$name));
 		return $file;
 	}
 
 	public function getFile($file){
-		return json_decode(file_get_contents($this->rootDir."/../app/config/".$file->name));
+		$route = "";
+		if(!empty($file->route)){ $route = $file->route . "/"; }
+		return json_decode(file_get_contents($this->rootDir."/../app/".$route.$file->name));
 	}
 
 }

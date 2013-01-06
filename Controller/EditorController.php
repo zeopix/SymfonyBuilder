@@ -60,7 +60,7 @@ class EditorController extends Controller
         
         $request = $this->getRequest();
         $file = new FileModel();
-        $form = $this->createFormBuilder($file)->add('name', 'text')->add('content','textarea')->getForm();
+        $form = $this->createFormBuilder($file)->add('name', 'text')->add('isDirectory','checkbox')->getForm();
 
         if($request->getMethod() == "POST"){
             $form->bind($request);
@@ -70,6 +70,9 @@ class EditorController extends Controller
                 $this->get('bundle_manager')->saveFile($file);
                 $request->getSession()->setFlash('message','Archivo guardado correctamente a las '.date('H:i'));
                 $route = $file->getRoutingRoute();
+                if($file->isDirectory){
+                    $this->redirect($this->generateUrl('builder_editor',array('namespace'=>$namespace,'name'=>$name)));
+                }
                 return $this->redirect($this->generateUrl('bundle_editor_edit',array('namespace'=>$namespace,'name'=>$name,'route'=>$route)));
             }
         }else

@@ -10,10 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/{configFileName}",name="builder_bundle",defaults={"configFileName"=FALSE})
+     * @Route("/{configFileName}-{configFileRoute}",name="builder_bundle",defaults={"configFileName"=FALSE,"configFileRoute"=FALSE})
      * @Template()
      */
-    public function indexAction($configFileName)
+    public function indexAction($configFileName,$configFileRoute)
     {
         $request = $this->getRequest();
         $bundles = $this->get('bundle_manager')->getList();
@@ -25,7 +25,7 @@ class DefaultController extends Controller
 
         $configTree = $this->get('config_manager')->getTree();
         if($configFileName){
-            $file = $this->get('config_manager')->openConfigFileByName($configFileName);
+            $file = $this->get('config_manager')->openConfigFileByNameAndRoute($configFileName,$configFileRoute);
 
             $configForm = $this->createFormBuilder($file)->add('content', 'textarea')->getForm();
 
