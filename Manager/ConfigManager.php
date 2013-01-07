@@ -56,6 +56,7 @@ class ConfigManager {
 	public function openConfigFileByNameAndRoute($name,$route){
 		$file = new FileModel();
 		$file->name =$name;
+		$file->route = $route;
 		if(!empty($route)){ $route = $route . "/"; }
 		$file->setContent(file_get_contents($this->rootDir."/../app/".$route.$name));
 		return $file;
